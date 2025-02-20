@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import User from '@models/User';
 
@@ -10,6 +11,20 @@ export const signUp: RequestHandler = async (req, res, next) => {
       res
         .status(400)
         .json({ message: 'Email, Name, and Password are required.' });
+      return;
+    }
+
+    const errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+        const sanitizedErrors = errors.array().map((error) => {
+          return {
+            message: error.msg
+          };
+        });
+    
+      res.status(400).json({ errors: sanitizedErrors });
+
       return;
     }
 

@@ -1,8 +1,20 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '@config/database';
+import { DataTypes, Model, Optional } from 'sequelize';
+import { sequelize } from '@config/database';
 
-const User = sequelize.define(
-  'User',
+interface IUser {
+  id: number;
+  email: string;
+  name: string;
+  password: string;
+  // birthdate?: Date;
+  // active: boolean;
+  // alive: boolean;
+}
+
+type IUserCreation = Optional<IUser, 'id'>;
+
+const User = sequelize.define<Model<IUser, IUserCreation>>(
+  'user',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -18,18 +30,23 @@ const User = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    birthdate: {
-      type: DataTypes.DATE,
+    password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    active: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
-    alive: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
+    // birthdate: {
+    //   type: DataTypes.DATE,
+    // },
+    // active: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: true,
+    //   // allowNull: false,
+    // },
+    // alive: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: true,
+    //   // allowNull: false,
+    // },
   },
   {
     timestamps: true,

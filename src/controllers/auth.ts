@@ -30,11 +30,12 @@ export const signUp: RequestHandler = async (req, res, next) => {
     res.status(201).json({
       message: 'User created successfully!',
       user: {
-        email: newUser.getDataValue('email'),
-        name: newUser.getDataValue('name'),
+        email: newUser.get('email'),
+        name: newUser.get('name'),
       },
     });
   } catch (error) {
+    console.log('error', error)
     next(error);
   }
 };

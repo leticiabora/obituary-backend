@@ -6,12 +6,12 @@ interface IUser {
   email: string;
   name: string;
   password: string;
-  // birthdate?: Date;
-  // active: boolean;
-  // alive: boolean;
+  birthdate?: Date;
+  active: boolean;
+  alive: boolean;
 }
 
-type IUserCreation = Optional<IUser, 'id'>;
+type IUserCreation = Optional<IUser, 'id' | 'active' | 'alive'>;
 
 const User = sequelize.define<Model<IUser, IUserCreation>>(
   'user',
@@ -34,19 +34,20 @@ const User = sequelize.define<Model<IUser, IUserCreation>>(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // birthdate: {
-    //   type: DataTypes.DATE,
-    // },
-    // active: {
-    //   type: DataTypes.BOOLEAN,
-    //   defaultValue: true,
-    //   // allowNull: false,
-    // },
-    // alive: {
-    //   type: DataTypes.BOOLEAN,
-    //   defaultValue: true,
-    //   // allowNull: false,
-    // },
+    birthdate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      // allowNull: false,
+    },
+    alive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      // allowNull: false,
+    },
   },
   {
     timestamps: true,

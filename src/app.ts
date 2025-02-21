@@ -23,7 +23,6 @@ app.use('/auth', authRoutes);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
   const statusCode: number = err.status ?? 500;
-  console.log('ERROR', err)
 
   if (!statusCode) {
     res.status(500).send(err);

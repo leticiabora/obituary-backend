@@ -1,25 +1,19 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '@config/database';
-import User from './User';
-import Post from './Post';
 
-const Comment = sequelize.define(
-  'Comment',
+const Like = sequelize.define(
+  'Like',
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: User,
+        model: 'users',
         key: 'id',
       },
     },
@@ -27,14 +21,32 @@ const Comment = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Post,
+        model: 'posts',
+        key: 'id',
+      },
+    },
+    commentId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'comments',
         key: 'id',
       },
     },
   },
   {
     timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['userId', 'postId'],
+      },
+      {
+        unique: true,
+        fields: ['userId', 'commentId'],
+      },
+    ],
   },
 );
 
-export default Comment;
+export default Like;

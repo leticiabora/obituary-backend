@@ -10,7 +10,8 @@
       "@utils/*": ["src/utils/*"],
       "@routes/*": ["src/routes/*"],
       "@controllers/*": ["src/controllers/*"],
-      "@models/*": ["src/models/*"]
+      "@models": ["./src/models/index.ts"],
+      "@models/*": ["src/models/*"],
     },
     "outDir": "./dist",
     "esModuleInterop": true,

@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import User from '@models/User';
+import { User } from '@models';
 
 interface CustomError extends Error {
   status?: number;

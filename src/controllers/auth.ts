@@ -1,7 +1,60 @@
 import { RequestHandler } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 import User from '@models/User';
+
+interface CustomError extends Error {
+  status?: number;
+}
+
+export const login: RequestHandler = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      const error: CustomError = new Error('User not found.');
+      error.status = 401;
+
+      throw error;
+    }
+
+    const passwordMatch = await bcrypt.compare(
+      password,
+      user.dataValues.password,
+    );
+
+    if (!passwordMatch) {
+      const error: CustomError = new Error('Wrong email or password');
+      error.status = 401;
+
+      throw error;
+    }
+
+    const token = jwt.sign(
+      {
+        id: user.dataValues.id,
+        email: user.dataValues.email,
+      },
+      `${process.env.SECRET}`,
+      { expiresIn: '10h' },
+    );
+
+    res.status(200).json({
+      user: {
+        id: user.dataValues.id,
+        email: user.dataValues.email,
+        token
+      }
+    })
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const signUp: RequestHandler = async (req, res, next) => {
   try {
@@ -15,14 +68,14 @@ export const signUp: RequestHandler = async (req, res, next) => {
     }
 
     const errors = validationResult(req);
-    
+
     if (!errors.isEmpty()) {
-        const sanitizedErrors = errors.array().map((error) => {
-          return {
-            message: error.msg
-          };
-        });
-    
+      const sanitizedErrors = errors.array().map((error) => {
+        return {
+          message: error.msg,
+        };
+      });
+
       res.status(400).json({ errors: sanitizedErrors });
 
       return;
@@ -45,12 +98,11 @@ export const signUp: RequestHandler = async (req, res, next) => {
     res.status(201).json({
       message: 'User created successfully!',
       user: {
-        email: newUser.get('email'),
-        name: newUser.get('name'),
+        email: newUser.dataValues.email,
+        name: newUser.dataValues.name,
       },
     });
   } catch (error) {
-    console.log('error', error)
     next(error);
   }
 };

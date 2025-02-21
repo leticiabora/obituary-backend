@@ -50,6 +50,9 @@ const User = sequelize.define<Model<IUser, IUserCreation>>(
     },
   },
   {
+    // defaultScope: {
+    //   attributes: { exclude: ['password'] },
+    // },
     timestamps: true,
   },
 );

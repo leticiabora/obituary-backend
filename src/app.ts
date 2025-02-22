@@ -6,6 +6,7 @@ import express, { Express, NextFunction, Request, Response } from 'express';
 import { startDatabase } from '@config/database';
 
 import authRoutes from '@routes/auth';
+import postRoutes from '@routes/post';
 interface CustomError extends Error {
   status?: number;
 }
@@ -15,6 +16,7 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use('/auth', authRoutes);
+app.use('/', postRoutes);
 
 // app.get('/', (req: Request, res: Response) => {
 //   res.send('Hello World!');

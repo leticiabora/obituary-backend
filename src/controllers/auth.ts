@@ -4,10 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { User } from '@models';
-
-interface CustomError extends Error {
-  status?: number;
-}
+import { CustomError } from '@customTypes/error.Types';
 
 export const login: RequestHandler = async (req, res, next) => {
   try {

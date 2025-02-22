@@ -12,6 +12,8 @@
       "@controllers/*": ["src/controllers/*"],
       "@models": ["./src/models/index.ts"],
       "@models/*": ["src/models/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@customTypes/*": ["src/customTypes/*"]
     },
     "outDir": "./dist",
     "esModuleInterop": true,

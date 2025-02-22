@@ -36,7 +36,6 @@ module.exports = {
       },
     });
 
-    // Adiciona índices únicos
     await queryInterface.addIndex('likes', ['userId', 'postId'], { unique: true });
     await queryInterface.addIndex('likes', ['userId', 'commentId'], { unique: true });
   },

@@ -13,6 +13,7 @@
       "@models": ["./src/models/index.ts"],
       "@models/*": ["src/models/*"],
       "@middlewares/*": ["src/middlewares/*"],
+      "@validations/*": ["src/validations/*"],
       "@customTypes/*": ["src/customTypes/*"]
     },
     "outDir": "./dist",

@@ -1,16 +1,13 @@
 import { CustomError } from '@customTypes/error.Types';
-import { NextFunction, Request, Response } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-
-interface CustomRequest extends Request {
-  user?: JwtPayload | string;
-}
+import { CustomRequest } from '@customTypes/request.Types';
+import { IUser } from '@customTypes/user.Types';
+import { NextFunction, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 
 const isAuth = (req: CustomRequest, res: Response, next: NextFunction) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
-    console.log('token', token);
   
     if (!token) {
       const error: CustomError = new Error('Not Authenticated!');
@@ -21,9 +18,7 @@ const isAuth = (req: CustomRequest, res: Response, next: NextFunction) => {
     }
 
 
-    const decoded = jwt.verify(token, `${process.env.SECRET}`);
-
-    console.log('decoded', decoded);
+    const decoded = jwt.verify(token, `${process.env.SECRET}`) as IUser;
 
     if (!decoded) {
       const error: CustomError = new Error('Not Authenticated!');

@@ -1,15 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '@config/database';
-
-interface IUser {
-  id: number;
-  email: string;
-  name: string;
-  password: string;
-  birthdate?: Date;
-  active: boolean;
-  alive: boolean;
-}
+import { IUser } from '@customTypes/user.Types';
 
 type IUserCreation = Optional<IUser, 'id' | 'active' | 'alive'>;
 

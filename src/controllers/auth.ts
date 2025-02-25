@@ -46,7 +46,7 @@ export const login: RequestHandler = async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 60 * 60 * 1000,
+      maxAge: 60 * 60 * 3000,
     });
 
     const loggedUser: LoggedUser = { ...user.dataValues };

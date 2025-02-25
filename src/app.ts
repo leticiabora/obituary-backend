@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ interface CustomError extends Error {
 const app: Express = express();
 const port = process.env.PORT || 4000;
 
+app.use(cors());
 app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/', postRoutes);

@@ -1,5 +1,3 @@
-import { Optional } from 'sequelize';
-
 export interface IUser {
   id: number;
   email: string;
@@ -9,5 +7,3 @@ export interface IUser {
   active: boolean;
   alive: boolean;
 }
-
-export type LoggedUser = Optional<IUser, 'password'>;

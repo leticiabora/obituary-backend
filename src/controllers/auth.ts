@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 
 import { User } from '@models';
 import { CustomError } from '@customTypes/error.Types';
-import { LoggedUser } from '@customTypes/user.Types';
 
 export const login: RequestHandler = async (req, res, next) => {
   try {
@@ -39,23 +38,16 @@ export const login: RequestHandler = async (req, res, next) => {
         email: user.dataValues.email,
       },
       `${process.env.SECRET}`,
-      { expiresIn: '10h' },
+      { expiresIn: '7d' },
     );
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 3000,
-    });
-
-    const loggedUser: LoggedUser = { ...user.dataValues };
-    delete loggedUser.password;
-
-     res.status(200).json({
+    res.status(200).json({
       message: 'Login successfully!',
-      user: loggedUser,
-    })
+      user: {
+        id: user.dataValues.id
+      },
+      token
+    });
   } catch (error) {
     next(error);
   }

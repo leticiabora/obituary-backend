@@ -47,8 +47,6 @@ export const createPost: RequestHandler = async (
       userId: req.user.id,
     });
 
-    console.log('newPost', newPost);
-
     res.status(201).json({
       message: 'Post created successfully!',
       post: newPost,

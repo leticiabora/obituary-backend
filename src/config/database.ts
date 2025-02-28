@@ -23,11 +23,9 @@ export const startDatabase = async () => {
     });
 
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;`);
-    console.log(`✅ Database "${DB_NAME}" is ready!`);
     await connection.end();
 
     await sequelize.authenticate();
-    console.log('Connected to the database successfully!');
   } catch (error) {
     console.error('Database connection error:', error);
   }

@@ -5,13 +5,15 @@ import jwt from 'jsonwebtoken';
 
 import { User } from '@models';
 import { CustomError } from '@customTypes/error.Types';
+import { normalizeEmail } from '@utils/util';
 
 export const login: RequestHandler = async (req, res, next) => {
   try {
     const email = req.body.email;
+    const normalizedEmail = normalizeEmail(email);
     const password = req.body.password;
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email: normalizedEmail } });
 
     if (!user) {
       const error: CustomError = new Error('User not found.');
@@ -77,9 +79,10 @@ export const signUp: RequestHandler = async (req, res, next) => {
 
       return;
     }
-
+    
+    const normalizedEmail = normalizeEmail(email);
     const hashedPassword = await bcrypt.hash(password, 12);
-    const hasUser = await User.findOne({ where: { email } });
+    const hasUser = await User.findOne({ where: { email: normalizedEmail } });
 
     if (hasUser) {
       res.status(400).json({ message: 'Email already exists.' });
@@ -87,7 +90,7 @@ export const signUp: RequestHandler = async (req, res, next) => {
     }
 
     const newUser = await User.create({
-      email,
+      email: normalizedEmail,
       name,
       password: hashedPassword,
     });

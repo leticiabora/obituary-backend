@@ -26,6 +26,7 @@ export const startDatabase = async () => {
     await connection.end();
 
     await sequelize.authenticate();
+    await sequelize.sync({ alter: true });
   } catch (error) {
     console.error('Database connection error:', error);
   }

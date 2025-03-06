@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ interface CustomError extends Error {
 
 const app: Express = express();
 const port = process.env.PORT || 4000;
+
+app.use(fileUpload());
 
 app.use(cors());
 app.use(express.json());

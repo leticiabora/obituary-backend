@@ -59,33 +59,41 @@ export const createPost: RequestHandler = async (
 
     const uuid = crypto.randomUUID();
 
+    // console.log('FILE', req.files);
     const file = req.files?.image as UploadedFile;
+    // let imageUrl = '';
 
-    console.log('FILE', file)
-    
-    const newImageName = `${uuid}${req.user.id}.jpg`;
-    const newAvatarKey = `${UPLOAD_DIR}/large/${newImageName}`;  
-    
-    const largeImage = await sharp(file.data).resize(200, 200).toFormat('jpg', { quality: 90 }).toBuffer();
 
-    const imageUpload = {
-      Bucket: AWS_BUCKET,
-      Key: newAvatarKey,
-      Body: largeImage,
-      ContentType: 'image/jpeg',
-      ACL: ObjectCannedACL.public_read,
-      CacheControl: 'public, max-age=315360000',
-    };
+    // if (file) {
+      
+      const newImageName = `${uuid}${req.user.id}.jpg`;
+      const newAvatarKey = `${UPLOAD_DIR}/large/${newImageName}`;  
+      
+      const largeImage = await sharp(file.data).resize(200, 200).toFormat('jpg', { quality: 90 }).toBuffer();
+  
+      const imageUpload = {
+        Bucket: AWS_BUCKET,
+        Key: newAvatarKey,
+        Body: largeImage,
+        ContentType: 'image/jpeg',
+        ACL: ObjectCannedACL.public_read,
+        CacheControl: 'public, max-age=315360000',
+      };
+  
+      const imageUploaded = await s3.putObject(imageUpload);
 
-    const imageUploaded = await s3.putObject(imageUpload);
+      const imageUrl = `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${newAvatarKey}`
+  
+      console.log('imageUploaded', imageUploaded);
 
-    console.log('imageUploaded', imageUploaded);
+    // }
+
 
     const newPost = await Post.create({
       title,
       description,
       userId: req.user.id,
-      image: `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${newAvatarKey}`,
+      image: imageUrl,
     });
 
     res.status(201).json({

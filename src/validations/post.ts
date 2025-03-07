@@ -3,8 +3,8 @@ import { body } from 'express-validator';
 export const createPostValidation = [
   body('title')
     .trim()
-    .isLength({ min: 5, max: 150 })
-    .withMessage('Title must be 5 to 150 characters.'),
+    .isLength({ min: 2, max: 150 })
+    .withMessage('Title must be 2 to 150 characters.'),
 
   body('description')
     .trim()

@@ -5,7 +5,12 @@ import { validationResult } from 'express-validator';
 import { CustomError } from '@customTypes/error.Types';
 import { CustomRequest } from '@customTypes/request.Types';
 import { ObjectCannedACL, S3 } from '@aws-sdk/client-s3';
-import { AWS_ACCESS_KEY, AWS_BUCKET, AWS_REGION, AWS_SECRET_KEY } from '@config/envs';
+import {
+  AWS_ACCESS_KEY,
+  AWS_BUCKET,
+  AWS_REGION,
+  AWS_SECRET_KEY,
+} from '@config/envs';
 import { UPLOAD_DIR } from '@config/constants';
 import { UploadedFile } from 'express-fileupload';
 import sharp from 'sharp';
@@ -19,19 +24,19 @@ const s3 = new S3({
   },
 });
 
-// console.log('S3', s3);
-
 export const getPosts: RequestHandler = async (req, res, next) => {
   try {
     const posts = await Post.findAll({
-      include: [{
-        model: User,
-        as: 'user',
-        attributes: ['id', 'name'],
-      }],
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['id', 'name'],
+        },
+      ],
     });
 
-    const formattedPosts = posts.map(post => {
+    const formattedPosts = posts.map((post) => {
       const formattedPost = post.toJSON();
       delete formattedPost.userId;
 
@@ -41,9 +46,8 @@ export const getPosts: RequestHandler = async (req, res, next) => {
       };
     });
 
-    
     res.status(200).json({
-      posts: formattedPosts
+      posts: formattedPosts,
     });
   } catch (error) {
     next(error);
@@ -76,31 +80,29 @@ export const createPost: RequestHandler = async (
 
     const uuid = crypto.randomUUID();
 
-    // console.log('FILE', req.files);
     const file = req.files?.image as UploadedFile;
-    // let imageUrl = '';
 
+    const newImageName = `${uuid}${req.user.id}.jpg`;
+    const newAvatarKey = `${UPLOAD_DIR}/large/${newImageName}`;
 
-    // if (file) {
-      
-      const newImageName = `${uuid}${req.user.id}.jpg`;
-      const newAvatarKey = `${UPLOAD_DIR}/large/${newImageName}`;  
-      
-      const largeImage = await sharp(file.data).resize(200, 200).toFormat('jpg', { quality: 90 }).toBuffer();
-  
-      const imageUpload = {
-        Bucket: AWS_BUCKET,
-        Key: newAvatarKey,
-        Body: largeImage,
-        ContentType: 'image/jpeg',
-        ACL: ObjectCannedACL.public_read,
-        CacheControl: 'public, max-age=315360000',
-      };
-  
-      await s3.putObject(imageUpload);
+    const largeImage = await sharp(file.data)
+      .resize(200, 200)
+      .toFormat('jpg', { quality: 90 })
+      .toBuffer();
 
-      const imageUrl = `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${newAvatarKey}`
-  
+    const imageUpload = {
+      Bucket: AWS_BUCKET,
+      Key: newAvatarKey,
+      Body: largeImage,
+      ContentType: 'image/jpeg',
+      ACL: ObjectCannedACL.public_read,
+      CacheControl: 'public, max-age=315360000',
+    };
+
+    await s3.putObject(imageUpload);
+
+    const imageUrl = `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${newAvatarKey}`;
+
     const newPost = await Post.create({
       title,
       description,
@@ -119,9 +121,39 @@ export const createPost: RequestHandler = async (
       message: 'Post created successfully!',
       post: {
         ...formattedPost,
-        user
+        user,
       },
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPost: RequestHandler = async (
+  req: CustomRequest,
+  res,
+  next,
+) => {
+  try {
+    const postId = req.params.id;
+
+    const post = await Post.findOne({
+      where: { id: postId },
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+
+    const formattedPost = post?.toJSON();
+    delete formattedPost.userId;
+
+    res
+      .status(200)
+      .json({ message: 'Post fetched successfully!', post: formattedPost });
   } catch (error) {
     next(error);
   }

@@ -8,6 +8,7 @@ User.hasMany(Post, { foreignKey: 'userId' });
 User.hasMany(Comment, { foreignKey: 'userId' });
 User.hasMany(Like, { foreignKey: 'userId' });
 
+Post.belongsTo(User, { foreignKey: 'userId' });
 Post.hasMany(Like, { foreignKey: 'postId' }); 
 Post.hasMany(Comment, { foreignKey: 'postId' });
 

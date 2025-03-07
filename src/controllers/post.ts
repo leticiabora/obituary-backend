@@ -9,6 +9,7 @@ import { AWS_ACCESS_KEY, AWS_BUCKET, AWS_REGION, AWS_SECRET_KEY } from '@config/
 import { UPLOAD_DIR } from '@config/constants';
 import { UploadedFile } from 'express-fileupload';
 import sharp from 'sharp';
+import { User } from '@models';
 
 const s3 = new S3({
   region: AWS_REGION,
@@ -22,11 +23,27 @@ const s3 = new S3({
 
 export const getPosts: RequestHandler = async (req, res, next) => {
   try {
-    const posts = await Post.findAll();
+    const posts = await Post.findAll({
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: ['id', 'name'],
+      }],
+    });
 
+    const formattedPosts = posts.map(post => {
+      const formattedPost = post.toJSON();
+      delete formattedPost.userId;
+
+      return {
+        ...formattedPost,
+        user: formattedPost.user,
+      };
+    });
+
+    
     res.status(200).json({
-      message: 'Posts fetch sucessfully!',
-      posts,
+      posts: formattedPosts
     });
   } catch (error) {
     next(error);
@@ -80,15 +97,10 @@ export const createPost: RequestHandler = async (
         CacheControl: 'public, max-age=315360000',
       };
   
-      const imageUploaded = await s3.putObject(imageUpload);
+      await s3.putObject(imageUpload);
 
       const imageUrl = `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${newAvatarKey}`
   
-      console.log('imageUploaded', imageUploaded);
-
-    // }
-
-
     const newPost = await Post.create({
       title,
       description,
@@ -96,9 +108,19 @@ export const createPost: RequestHandler = async (
       image: imageUrl,
     });
 
+    const user = await User.findByPk(req.user.id, {
+      attributes: ['id', 'name'],
+    });
+
+    const formattedPost = newPost.toJSON();
+    delete formattedPost.userId;
+
     res.status(201).json({
       message: 'Post created successfully!',
-      post: newPost,
+      post: {
+        ...formattedPost,
+        user
+      },
     });
   } catch (error) {
     next(error);

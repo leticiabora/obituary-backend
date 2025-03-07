@@ -14,7 +14,7 @@ import {
 import { UPLOAD_DIR } from '@config/constants';
 import { UploadedFile } from 'express-fileupload';
 import sharp from 'sharp';
-import { User } from '@models';
+import { Comment, User } from '@models';
 
 const s3 = new S3({
   region: AWS_REGION,
@@ -145,6 +145,18 @@ export const getPost: RequestHandler = async (
           as: 'author',
           attributes: ['id', 'name'],
         },
+        {
+          model: Comment,
+          as: 'comments',
+          attributes: ['id', 'description'],
+          include: [
+            {
+              model: User,
+              as: 'author',
+              attributes: ['id', 'name']
+            }
+          ]
+        }
       ],
     });
 

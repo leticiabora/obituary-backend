@@ -10,9 +10,9 @@ User.hasMany(Like, { foreignKey: 'userId' });
 
 Post.belongsTo(User, { foreignKey: 'userId', as: 'author' });
 Post.hasMany(Like, { foreignKey: 'postId' }); 
-Post.hasMany(Comment, { foreignKey: 'postId' });
+Post.hasMany(Comment, { foreignKey: 'postId', as: 'comments' });
 
-Comment.belongsTo(User, { foreignKey: 'userId' });
+Comment.belongsTo(User, { foreignKey: 'userId', as: 'author' });
 Comment.belongsTo(Post, { foreignKey: 'postId' });
 Comment.hasMany(Like, { foreignKey: 'commentId' });
 

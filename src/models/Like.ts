@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '@config/database';
 
 const Like = sequelize.define(
-  'Like',
+  'like',
   {
     id: {
       type: DataTypes.INTEGER,

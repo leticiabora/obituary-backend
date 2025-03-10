@@ -3,7 +3,7 @@ import { sequelize } from '@config/database';
 import User from './User';
 
 const Post = sequelize.define(
-  'Post',
+  'post',
   {
     id: {
       type: DataTypes.INTEGER,

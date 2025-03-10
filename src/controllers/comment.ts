@@ -13,12 +13,11 @@ export const createComment: RequestHandler = async (req: CustomRequest, res, nex
       description,
       userId,
     });
-    console.log(addComment);
-
+    
     const user = await User.findByPk(userId, {
       attributes: ['id', 'name'],
     });
-
+    
     const formattedComment = addComment.toJSON();
     delete formattedComment.userId;
 

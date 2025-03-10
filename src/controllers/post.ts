@@ -148,7 +148,9 @@ export const getPost: RequestHandler = async (
         {
           model: Comment,
           as: 'comments',
-          attributes: ['id', 'description'],
+          attributes: {
+            exclude: ['userId'],
+          },
           include: [
             {
               model: User,

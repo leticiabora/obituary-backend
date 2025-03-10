@@ -4,7 +4,7 @@ import User from './User';
 import Post from './Post';
 
 const Comment = sequelize.define(
-  'Comment',
+  'comment',
   {
     id: {
       type: DataTypes.INTEGER,

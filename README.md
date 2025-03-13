@@ -37,7 +37,7 @@ You can check the frontend [here](https://github.com/leticiabora/obituary-fronte
 
 My main area is Frontend, so it's basically my first backend project. I had an idea how node works, but is the first time that I put my hands dirty in backend and to be fair, I'm enjoying it. Seems like I'm a frontend rebel after 5 years centering divs (kidding, I had some cool and not cool challenges as a frontend).
 
-I'm basically using typescript, node, express, mySQL and sequelize. It's a work in progress, so I still have a lot of things to do:
+I'm basically using typescript, next/react, node, express, mySQL and sequelize. It's a work in progress, so I still have a lot of things to do:
 
 - Feature flag
 - Tests (backend and frontend)

@@ -16,6 +16,7 @@ On April 28, 2022, I was with one of my brothers at a Kiss concert, living a dre
 On April 20, 2023, we were at a Helloween concert, and one of the songs they played was Best Time, which says:
 
 >I will have the best time of my life
+>
 >Yesterday is history, tomorrow is a mystery.
 
 I listened to that song with my heart filled with gratitude.
@@ -33,12 +34,13 @@ So, let's try to make it lighter. Let's try not to bury ourselves in depression,
 
 ## Techical aspects
 
-You can check the frontend [here](https://github.com/leticiabora/obituary-frontend).
+You can check the backend [here](https://github.com/leticiabora/obituary-backend).
 
 My main area is Frontend, so it's basically my first backend project. I had an idea how node works, but is the first time that I put my hands dirty in backend and to be fair, I'm enjoying it. Seems like I'm a frontend rebel after 5 years centering divs (kidding, I had some cool and not cool challenges as a frontend).
 
 I'm basically using typescript, next/react, node, express, mySQL and sequelize. It's a work in progress, so I still have a lot of things to do:
 
+- Deploy
 - Feature flag
 - Tests (backend and frontend)
 - Improve UI

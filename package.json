@@ -4,6 +4,8 @@
   "description": "",
   "main": "dist/app.ts",
   "scripts": {
+    "build": "tsc && tsc-alias",
+    "start": "node dist/src/app.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node -r tsconfig-paths/register src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,7 +33,8 @@
     "mysql2": "^3.12.0",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "tsc-alias": "^1.8.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",

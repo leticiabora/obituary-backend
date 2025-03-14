@@ -26,30 +26,29 @@ const s3 = new S3({
 
 export const getPosts: RequestHandler = async (req, res, next) => {
   try {
-    res.status(200).json({ message: 'test', host: process.env.DB_HOST, user: process.env.DB_USER, port: process.env.DB_PORT, password: process.env.DB_PASSWORD })
-    // const posts = await Post.findAll({
-    //   include: [
-    //     {
-    //       model: User,
-    //       as: 'author',
-    //       attributes: ['id', 'name'],
-    //     },
-    //   ],
-    // });
+    const posts = await Post.findAll({
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
 
-    // const formattedPosts = posts.map((post) => {
-    //   const formattedPost = post.toJSON();
-    //   delete formattedPost.userId;
+    const formattedPosts = posts.map((post) => {
+      const formattedPost = post.toJSON();
+      delete formattedPost.userId;
 
-    //   return {
-    //     ...formattedPost,
-    //     user: formattedPost.user,
-    //   };
-    // });
+      return {
+        ...formattedPost,
+        user: formattedPost.user,
+      };
+    });
 
-    // res.status(200).json({
-    //   posts: formattedPosts,
-    // });
+    res.status(200).json({
+      posts: formattedPosts,
+    });
   } catch (error) {
     next(error);
   }

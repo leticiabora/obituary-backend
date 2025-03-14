@@ -26,21 +26,22 @@ jobs:
 
             NODE_ENV=${{ secrets.NODE_ENV }}
             PORT=${{ secrets.PORT }}
-
             # database
-            DB_HOST=${{ secrets.DB_HOST }}
+            DB_NAME=${{ secrets.DB_NAME }}
             DB_USER=${{ secrets.DB_USER }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            DB_NAME=${{ secrets.DB_NAME }}
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_PORT=${{ secrets.DB_PORT }}
+
+            # jwt
+            SECRET=${{ secrets.SECRET }}
 
             # aws
             AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
             AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
-            AWS_BUCKET=${{ secrets.AWS_BUCKET }}
             AWS_REGION=${{ secrets.AWS_REGION }}
+            AWS_BUCKET=${{ secrets.AWS_BUCKET }}
 
-            # jwt
-            SECRET=${{ secrets.SECRET }}
             EOF
 
             # pull latest code, install dependencies, and restart app

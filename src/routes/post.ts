@@ -6,7 +6,7 @@ import { createComment } from '@controllers/comment';
 
 const router = express.Router();
 
-router.get('/posts', isAuth, getPosts);
+router.get('/posts', getPosts);
 
 router.get('/post/:id', getPost);
 

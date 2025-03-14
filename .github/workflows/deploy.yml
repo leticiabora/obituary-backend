@@ -38,6 +38,7 @@ jobs:
 
             # jwt
             SECRET=${{ secrets.SECRET }}
+            EOF
 
             # pull latest code, install dependencies, and restart app
             git reset --hard

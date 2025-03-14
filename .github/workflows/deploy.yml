@@ -24,6 +24,8 @@ jobs:
             # create the .env file
             cat <<EOF > .env
 
+            PORT=${{ secrets.PORT }}
+
             # database
             DB_HOST=${{ secrets.DB_HOST }}
             DB_USER=${{ secrets.DB_USER }}

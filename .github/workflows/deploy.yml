@@ -19,12 +19,30 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /usr/share/nginx/html/obituary
+            cd /usr/share/nginx/html/obituary-backend
+
+            # create the .env file
+            cat <<EOF > .env
+
+            # database
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_NAME=${{ secrets.DB_NAME }}
+
+            # aws
+            AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
+            AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
+            AWS_BUCKET=${{ secrets.AWS_BUCKET }}
+            AWS_REGION=${{ secrets.AWS_REGION }}
+
+            # jwt
+            SECRET=${{ secrets.SECRET }}
 
             # pull latest code, install dependencies, and restart app
             git reset --hard
             git pull origin main
             yarn
-            pm2 stop obituary
-            pm2 delete obituary
+            pm2 stop obituary-backend
+            pm2 delete obituary-backend
             yarn deploy

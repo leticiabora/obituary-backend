@@ -1,6 +1,6 @@
 # About my fellow - Work in Progress
 
-Hey! About My Fellow is an obituary/memorial that I built to improve my backend/frontend skills and to honor our beloved ones.
+Hey! [About My Fellow](https://www.aboutmyfellow.com/) is an obituary/memorial that I built to improve my backend/frontend skills and to honor our beloved ones.
 
 I know this is not a regular thing to build.
 
@@ -40,8 +40,7 @@ My main area is Frontend, so it's basically my first backend project. I had an i
 
 I'm basically using typescript, next/react, node, express, mySQL and sequelize. It's a work in progress, so I still have a lot of things to do:
 
-- Deploy
 - Feature flag
 - Tests (backend and frontend)
-- Improve UI
+- Improve UI: design, css/styled components
 - Adding new features: likes, gifts, gallery, etc.

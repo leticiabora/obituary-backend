@@ -11,3 +11,7 @@ export const createPostValidation = [
     .isLength({ max: 2048 })
     .withMessage('Description must be at most 2048 characters long.'),
 ];
+
+export const createCommentValidation = [
+  body('description').trim().isLength({ max: 2048 }).withMessage('Description must be at most 2048 characters long.'),
+]

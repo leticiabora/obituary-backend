@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '@config/database';
 import { IUser } from '@customTypes/user.Types';
 
-type IUserCreation = Optional<IUser, 'id' | 'active' | 'alive'>;
+type IUserCreation = Optional<IUser, 'id' | 'active' | 'alive' | 'isAdmin'>;
 
 const User = sequelize.define<Model<IUser, IUserCreation>>(
   'user',
@@ -39,6 +39,11 @@ const User = sequelize.define<Model<IUser, IUserCreation>>(
       defaultValue: true,
       // allowNull: false,
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true, 
+      defaultValue: false,
+    }
   },
   {
     // defaultScope: {

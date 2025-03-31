@@ -6,4 +6,5 @@ export interface IUser {
   birthdate?: Date;
   active: boolean;
   alive: boolean;
+  isAdmin: boolean,
 }

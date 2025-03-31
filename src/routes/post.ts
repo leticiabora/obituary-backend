@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.get('/posts', getPosts);
 
+router.get('/admin/posts', isAuth, getPosts);
+
 router.get('/post/:id', getPost);
 
 router.post('/post', isAuth, createPostValidation, createPost);

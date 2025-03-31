@@ -38,6 +38,7 @@ export const login: RequestHandler = async (req, res, next) => {
       {
         id: user.dataValues.id,
         email: user.dataValues.email,
+        isAdmin: user.dataValues.isAdmin,
       },
       `${process.env.SECRET}`,
       { expiresIn: '7d' },

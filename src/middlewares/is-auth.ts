@@ -17,7 +17,6 @@ const isAuth = (req: CustomRequest, res: Response, next: NextFunction) => {
       throw error;
     }
 
-
     const decoded = jwt.verify(token, `${process.env.SECRET}`) as IUser;
 
     if (!decoded) {

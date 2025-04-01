@@ -30,6 +30,11 @@ const Post = sequelize.define(
         key: 'id',
       },
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    }
   },
   {
     timestamps: true,

@@ -27,6 +27,48 @@ const s3 = new S3({
 export const getPosts: RequestHandler = async (req, res, next) => {
   try {
     const posts = await Post.findAll({
+      where: { active: true },
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+
+    const formattedPosts = posts.map((post) => {
+      const formattedPost = post.toJSON();
+      delete formattedPost.userId;
+
+      return {
+        ...formattedPost,
+        user: formattedPost.user,
+      };
+    });
+
+    res.status(200).json({
+      posts: formattedPosts,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllPosts: RequestHandler = async (
+  req: CustomRequest,
+  res,
+  next,
+) => {
+  try {
+    const user = req.user;
+
+    if (!user?.isAdmin) {
+      res.status(403).json({ error: 'Not allowed!' });
+      return;
+    }
+
+    const posts = await Post.findAll({
       include: [
         {
           model: User,
@@ -155,10 +197,10 @@ export const getPost: RequestHandler = async (
             {
               model: User,
               as: 'author',
-              attributes: ['id', 'name']
-            }
-          ]
-        }
+              attributes: ['id', 'name'],
+            },
+          ],
+        },
       ],
     });
 
@@ -168,6 +210,35 @@ export const getPost: RequestHandler = async (
     res
       .status(200)
       .json({ message: 'Post fetched successfully!', post: formattedPost });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deletePost: RequestHandler = async (
+  req: CustomRequest,
+  res,
+  next,
+) => {
+  try {
+    const postId = req.params.id;
+    const user = req.user;
+
+    if (!user?.isAdmin) {
+      res.status(403).json({ error: 'Not allowed!' });
+      return;
+    }
+
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      res.status(404).json({ error: 'Not found!' });
+      return;
+    }
+
+    await Post.update({ active: 0 }, { where: { id: postId } });
+
+    res.status(200).json({ message: 'Post deleted successfully!' });
   } catch (error) {
     next(error);
   }

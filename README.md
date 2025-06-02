@@ -1,16 +1,13 @@
-# About my fellow - Work in Progress
+# About my fellow - DEMO
 
 Hey! [About My Fellow](https://www.aboutmyfellow.com/) is an obituary/memorial that I built to improve my backend/frontend skills and to honor our beloved ones.
+I started with this demo and I'm improving the layout and code to match what I want to make: an obituary/funeral plan that is lighter and with a touch of humor.
+you can check the demo [here](https://obituary-frontend-9a1a.vercel.app/)
 
 I know this is not a regular thing to build.
 
 ## Why a memorial?
 
-Hey! About My Fellow is an obituary/memorial that I built to improve my backend/frontend skills and to honor our beloved ones.
-
-I know this is not a regular thing to build.
-
-Why a memorial?
 On April 28, 2022, I was with one of my brothers at a Kiss concert, living a dream. He was so happy—it was his first Kiss concert, and it was my second one. (I don't want to sound like we were that type of sweet siblings, full of love. We were the type of siblings who loved each other but never admitted it, and we fought a lot when we were young.)
 
 On April 20, 2023, we were at a Helloween concert, and one of the songs they played was Best Time, which says:
@@ -28,7 +25,7 @@ My family was not traditional in this aspect—we talked about death, we always 
 After his death, I started to think about how to deal with grief, because to be fair, I'm not over it. Even though my family is mostly rational, it still hurts. A LOT.
 That's how _About My Fellow_ started to take shape.
 
-I wanted a place to honor people (and pets), but at the same time, I didn't want something purely sad—I wanted to help people remember their loved ones with love, in the way they would have wanted to be remembered. I wanted them to feel free to make jokes if they wanted to, without the fear of being judged. Because, at the end of the day, those who are not involved will continue with their lives, and maybe, sometimes, they will remember that someone died someday—but we are the ones who will go to sleep with this pain forever.
+I wanted a place to honor people (and pets), but at the same time, I didn't want something purely sad. I wanted to help people remember their loved ones with love, in the way they would have wanted to be remembered. I wanted them to feel free to make jokes if they wanted to, without the fear of being judged. Because, at the end of the day, those who are not involved will continue with their lives, and maybe, sometimes, they will remember that someone died someday... But we are the ones who will go to sleep with this pain forever.
 
 So, let's try to make it lighter. Let's try not to bury ourselves in depression, and let's share stories.
 
